@@ -10,4 +10,4 @@ For more information about [SNOMED Compositional Grammar] (https://github.com/IH
   - The object factory can be extended in order to have the expression Java objects instantiated using your own classes.
 
 ## Example
-For code examples see [unit tests](https://github.com/IHTSDO/snomed-scg-parser/blob/develop/src/test/java/org/snomed/langauges/scg/SCGQueryBuilderTest.java).
+For code examples see [unit tests](https://github.com/IHTSDO/snomed-scg-parser/blob/develop/src/test/java/org/snomed/langauges/scg/SCGQueryBuilderTest.java)
