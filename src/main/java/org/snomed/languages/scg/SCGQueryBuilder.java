@@ -11,8 +11,6 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
-import org.snomed.languages.scg.SCGException;
-import org.snomed.languages.scg.SCGObjectFactory;
 import org.snomed.languages.scg.domain.model.Attribute;
 import org.snomed.languages.scg.domain.model.AttributeGroup;
 import org.snomed.languages.scg.domain.model.AttributeValue;
@@ -37,7 +35,7 @@ public class SCGQueryBuilder {
 		this.scgObjectFactory = scgObjectFactory;
 	}
 
-	public Expression createQuery(String scg) {
+	public Expression createQuery(String scg) throws SCGException{
 		
 		ANTLRInputStream inputStream = new ANTLRInputStream(scg);
 		final SCGLexer lexer = new SCGLexer(inputStream);
