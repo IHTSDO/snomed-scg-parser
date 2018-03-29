@@ -22,10 +22,9 @@ public class SCGQueryBuilderTest {
 	public void setUp() {
 		 builder = new SCGQueryBuilder(new SCGObjectFactory());
 	}
-	
 	@Test(expected = SCGException.class)
 	public void testExpressionWithInvalidSyntax() {
-		String scg = "|83152002 |oophorectomy|";
+		String scg = "83152002|";
 		builder.createQuery(scg);
 	}
 	

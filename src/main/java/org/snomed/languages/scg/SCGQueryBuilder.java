@@ -5,7 +5,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.BailErrorStrategy;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.RecognitionException;
@@ -17,6 +16,7 @@ import org.snomed.languages.scg.domain.model.AttributeValue;
 import org.snomed.languages.scg.domain.model.DefinitionStatus;
 import org.snomed.languages.scg.domain.model.Expression;
 import org.snomed.languages.scg.generated.ImpotentSCGListener;
+import org.snomed.languages.scg.generated.SCGParserErrorListener;
 import org.snomed.languages.scg.generated.parser.SCGLexer;
 import org.snomed.languages.scg.generated.parser.SCGParser;
 import org.snomed.languages.scg.generated.parser.SCGParser.AttributeContext;
@@ -41,8 +41,7 @@ public class SCGQueryBuilder {
 		final SCGLexer lexer = new SCGLexer(inputStream);
 		final CommonTokenStream tokenStream = new CommonTokenStream(lexer);
 		final SCGParser parser = new SCGParser(tokenStream);
-		parser.setErrorHandler(new BailErrorStrategy());
-
+		parser.addErrorListener(new SCGParserErrorListener());
 		ParserRuleContext tree;
 		try {
 			tree = parser.expression();
