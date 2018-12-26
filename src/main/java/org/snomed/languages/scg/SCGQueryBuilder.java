@@ -26,6 +26,7 @@ import org.snomed.languages.scg.generated.parser.SCGParser.DefinitionstatusConte
 import org.snomed.languages.scg.generated.parser.SCGParser.ExpressionContext;
 import org.snomed.languages.scg.generated.parser.SCGParser.ExpressionvalueContext;
 import org.snomed.languages.scg.generated.parser.SCGParser.SubexpressionContext;
+import org.snomed.languages.scg.validation.SCGValidation;
 
 public class SCGQueryBuilder {
 
@@ -52,7 +53,11 @@ public class SCGQueryBuilder {
 		final SCGListenerImpl listener = new SCGListenerImpl(scgObjectFactory);
 		walker.walk(listener, tree);
 
-		return listener.getExpression();
+		final Expression expression = listener.getExpression();
+		final SCGValidation validater = new SCGValidation();
+		validater.validateExpression(expression);
+    
+		return expression;
 	}
 	
 	
