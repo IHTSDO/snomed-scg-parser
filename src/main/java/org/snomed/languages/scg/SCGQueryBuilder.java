@@ -56,7 +56,7 @@ public class SCGQueryBuilder {
 		final Expression expression = listener.getExpression();
 		final SCGValidation validater = new SCGValidation();
 		validater.validateExpression(expression);
-    
+
 		return expression;
 	}
 	
