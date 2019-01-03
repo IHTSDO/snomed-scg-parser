@@ -12,89 +12,89 @@ import org.snomed.languages.scg.domain.model.Expression;
 
 public class SCGValidation {
 
-    /**
-     * Perform any validations on expressions and throws a {@link SCGException}
-     * 
-     * @param expression
-     * @throws SCGException
-     */
-    @SuppressWarnings("serial")
-    public void validateExpression(final Expression expression) throws SCGException {
-	
-	// Concept id validation phase
-	validateConceptIds(expression, new CompositConceptIdValidator(new ArrayList<Validator<String>>() {
-	    {
-		add(new VerhoeffCheckDigitValidator());
-	    }
-	}));
-    }
+        /**
+         * Perform any validations on expressions and throws a {@link SCGException}
+         * 
+         * @param expression
+         * @throws SCGException
+         */
+        @SuppressWarnings("serial")
+        public void validateExpression(final Expression expression) throws SCGException {
 
-    private void validateConceptIds(final Expression expression, final CompositConceptIdValidator compositeValidate)
-	    throws SCGException {
-	if (expression == null) {
-	    return;
-	}
+                // Concept id validation phase
+                validateConceptIds(expression, new CompositConceptIdValidator(new ArrayList<Validator<String>>() {
+                        {
+                                add(new VerhoeffCheckDigitValidator());
+                        }
+                }));
+        }
 
-	// Check for focus concepts
-	final List<String> focusConcepts = expression.getFocusConcepts();
-	compositeValidate.validate(focusConcepts);
+        private void validateConceptIds(final Expression expression, final CompositConceptIdValidator compositeValidate)
+                        throws SCGException {
+                if (expression == null) {
+                        return;
+                }
 
-	// Handle attributes/values/nested expressions
-	final List<Attribute> attributes = expression.getAttributes();
-	if (attributes != null) {
-	    validateAttributes(attributes, compositeValidate);
-	}
+                // Check for focus concepts
+                final List<String> focusConcepts = expression.getFocusConcepts();
+                compositeValidate.validate(focusConcepts);
 
-	// Validate attribute groups
-	final Set<AttributeGroup> attributeGroups = expression.getAttributeGroups();
-	if (attributeGroups != null) {
-	    validateAttibuteGroups(attributeGroups, compositeValidate);
-	}
-    }
+                // Handle attributes/values/nested expressions
+                final List<Attribute> attributes = expression.getAttributes();
+                if (attributes != null) {
+                        validateAttributes(attributes, compositeValidate);
+                }
 
-    private void validateAttibuteGroups(final Set<AttributeGroup> attributeGroups,
-	    final CompositConceptIdValidator compositeValidate) {
-	for (final AttributeGroup attibuteGroup : attributeGroups) {
-	    validateAttributes(attibuteGroup.getAttributes(), compositeValidate);
-	}
-    }
+                // Validate attribute groups
+                final Set<AttributeGroup> attributeGroups = expression.getAttributeGroups();
+                if (attributeGroups != null) {
+                        validateAttibuteGroups(attributeGroups, compositeValidate);
+                }
+        }
 
-    private void validateAttributes(final List<Attribute> attributes,
-	    final CompositConceptIdValidator compositeValidate) {
-	for (final Attribute attribute : attributes) {
-	    // Attribute id validation
-	    compositeValidate.validate(attribute.getAttributeId());
-	    // Attribute value validation
-	    final AttributeValue attributeValue = attribute.getAttributeValue();
-	    if (attributeValue != null) {
-		compositeValidate.validate(attributeValue.getConceptId());
-		// Nested Expression
-		validateConceptIds(attributeValue.getNestedExpression(), compositeValidate);
-	    }
-	}
-    }
+        private void validateAttibuteGroups(final Set<AttributeGroup> attributeGroups,
+                        final CompositConceptIdValidator compositeValidate) {
+                for (final AttributeGroup attibuteGroup : attributeGroups) {
+                        validateAttributes(attibuteGroup.getAttributes(), compositeValidate);
+                }
+        }
 
-    private class CompositConceptIdValidator {
-	private List<Validator<String>> validatorList;
+        private void validateAttributes(final List<Attribute> attributes,
+                        final CompositConceptIdValidator compositeValidate) {
+                for (final Attribute attribute : attributes) {
+                        // Attribute id validation
+                        compositeValidate.validate(attribute.getAttributeId());
+                        // Attribute value validation
+                        final AttributeValue attributeValue = attribute.getAttributeValue();
+                        if (attributeValue != null) {
+                                compositeValidate.validate(attributeValue.getConceptId());
+                                // Nested Expression
+                                validateConceptIds(attributeValue.getNestedExpression(), compositeValidate);
+                        }
+                }
+        }
 
-	public CompositConceptIdValidator(final List<Validator<String>> validatorList) {
-	    this.validatorList = validatorList;
-	}
+        private class CompositConceptIdValidator {
+                private List<Validator<String>> validatorList;
 
-	public void validate(final List<String> ids) {
-	    for (final Validator<String> validater : validatorList) {
-		validater.validate(ids);
-	    }
-	}
+                public CompositConceptIdValidator(final List<Validator<String>> validatorList) {
+                        this.validatorList = validatorList;
+                }
 
-	@SuppressWarnings("serial")
-	public void validate(final String id) {
-	    validate(new ArrayList<String>() {
-		{
-		    add(id);
-		}
-	    });
-	}
-    }
+                public void validate(final List<String> ids) {
+                        for (final Validator<String> validater : validatorList) {
+                                validater.validate(ids);
+                        }
+                }
+
+                @SuppressWarnings("serial")
+                public void validate(final String id) {
+                        validate(new ArrayList<String>() {
+                                {
+                                        add(id);
+                                }
+                        });
+                }
+        }
 
 }
