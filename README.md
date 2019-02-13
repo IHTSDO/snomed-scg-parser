@@ -4,6 +4,11 @@ An open source Java library for parsing SNOMED Post-Coordinated expressions writ
 
 For more information about [SNOMED Compositional Grammar](https://github.com/IHTSDO/SNOMEDCT-Languages/tree/master/SnomedCTCompositionalGrammar)
 
+## ANTLR4 Grammar
+The official SNOMED International ABNF syntax definition for ECL has been converted to ANTLR4 in order to generate tooling support.
+- [SCG ANTLR4 grammar file](parser-generation/SCG.txt)
+- [How to generate ANTLR4 grammar from ABNF](generate_antlr4_grammar.md)
+
 ## Capabilities
 - Validate the syntax of post-coordinated expressions
 - Convert valid expressions into Java objects for further processing
