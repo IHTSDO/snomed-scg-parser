@@ -1,10 +1,8 @@
 package org.snomed.languages.scg.domain.model;
 
-import org.snomed.languages.scg.domain.model.DefinitionStatus;
-
 public enum DefinitionStatus {
 	
-	EQUIVALENT_TO(" ==="),
+	EQUIVALENT_TO("==="),
 	SUBTYPE_OF("<<<");
 
 	private String text;

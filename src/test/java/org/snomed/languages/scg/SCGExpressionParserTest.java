@@ -54,13 +54,26 @@ public class SCGExpressionParserTest {
 	}
 
 	@Test
-	public void testExpressionWithDefinitionStatus() {
-		String scg = "<<<  73211009 |Diabetes mellitus| :  363698007 |Finding site|  =  113331007 |Endocrine system|";
+	public void testExpressionWithSubTypeOfDefinitionStatus() {
+		String scg = "<<< 73211009 |Diabetes mellitus| :  363698007 |Finding site|  =  113331007 |Endocrine system|";
 		Expression expression = builder.parseExpression(scg);
 		assertEquals(DefinitionStatus.SUBTYPE_OF, expression.getDefinitionStatus());
 		assertNotNull(expression.getFocusConcepts());
 		assertEquals(1, expression.getFocusConcepts().size());
 		assertTrue(expression.getFocusConcepts().contains("73211009"));
+	}
+
+	@Test
+	public void testExpressionWithExplicitEquivalentToDefinitionStatus() {
+		String scg = "=== 46866001 |Fracture of lower limb| + 428881005 |Injury of tibia| :\n" +
+				"        116676008 |Associated morphology| = 72704001 |Fracture| ,\n" +
+				"        363698007 |Finding site| = 12611008 |Bone structure of tibia|";
+		Expression expression = builder.parseExpression(scg);
+		assertEquals(DefinitionStatus.EQUIVALENT_TO, expression.getDefinitionStatus());
+		assertNotNull(expression.getFocusConcepts());
+		assertEquals(2, expression.getFocusConcepts().size());
+		assertTrue(expression.getFocusConcepts().contains("46866001"));
+		assertTrue(expression.getFocusConcepts().contains("428881005"));
 	}
 
 	@Test
