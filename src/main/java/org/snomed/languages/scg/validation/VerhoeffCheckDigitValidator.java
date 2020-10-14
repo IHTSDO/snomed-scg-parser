@@ -6,7 +6,8 @@ import org.apache.commons.validator.routines.checkdigit.VerhoeffCheckDigit;
 import org.snomed.languages.scg.SCGException;
 
 public class VerhoeffCheckDigitValidator implements Validator<String> {
-        private VerhoeffCheckDigit verhoeffCheck = new VerhoeffCheckDigit();
+
+        private final VerhoeffCheckDigit verhoeffCheck = new VerhoeffCheckDigit();
 
         @Override
         public void validate(List<String> input) {

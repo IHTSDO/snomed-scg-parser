@@ -26,17 +26,17 @@ import org.snomed.languages.scg.generated.parser.SCGParser.DefinitionstatusConte
 import org.snomed.languages.scg.generated.parser.SCGParser.ExpressionContext;
 import org.snomed.languages.scg.generated.parser.SCGParser.ExpressionvalueContext;
 import org.snomed.languages.scg.generated.parser.SCGParser.SubexpressionContext;
-import org.snomed.languages.scg.validation.SCGValidation;
+import org.snomed.languages.scg.validation.SCGValidator;
 
-public class SCGQueryBuilder {
+public class SCGExpressionParser {
 
-	private SCGObjectFactory scgObjectFactory;
+	private final SCGObjectFactory scgObjectFactory;
 	
-	public SCGQueryBuilder(SCGObjectFactory scgObjectFactory) {
+	public SCGExpressionParser(SCGObjectFactory scgObjectFactory) {
 		this.scgObjectFactory = scgObjectFactory;
 	}
 
-	public Expression createQuery(String scg) throws SCGException{
+	public Expression parseExpression(String scg) throws SCGException {
 		
 		ANTLRInputStream inputStream = new ANTLRInputStream(scg);
 		final SCGLexer lexer = new SCGLexer(inputStream);
@@ -54,8 +54,8 @@ public class SCGQueryBuilder {
 		walker.walk(listener, tree);
 
 		final Expression expression = listener.getExpression();
-		final SCGValidation validater = new SCGValidation();
-		validater.validateExpression(expression);
+		final SCGValidator validator = new SCGValidator();
+		validator.validateExpression(expression);
 
 		return expression;
 	}
@@ -63,7 +63,7 @@ public class SCGQueryBuilder {
 	
 	private static class SCGListenerImpl extends ImpotentSCGListener{
 		
-		private SCGObjectFactory scgObjectFactory;
+		private final SCGObjectFactory scgObjectFactory;
 		private Expression rootExpression;
 
 		public SCGListenerImpl(SCGObjectFactory scgObjectFactory) {
@@ -118,7 +118,7 @@ public class SCGQueryBuilder {
 					Set<AttributeGroup> groups = ctx.refinement()
 							.attributegroup()
 							.stream()
-							.map(g -> mapAttributeGroup(g))
+							.map(this::mapAttributeGroup)
 							.collect(Collectors.toSet());
 					expression.setAttributeGroups(groups);
 				}
@@ -129,7 +129,7 @@ public class SCGQueryBuilder {
 								.attributeset()
 								.attribute()
 								.stream()
-								.map(a -> mapAttributes(a))
+								.map(this::mapAttributes)
 								.collect(Collectors.toList());
 						expression.setAttributes(attributes);
 					}
@@ -167,7 +167,7 @@ public class SCGQueryBuilder {
 					List<Attribute> attributes = ctx.attributeset()
 							.attribute()
 							.stream()
-							.map(a -> mapAttributes(a))
+							.map(this::mapAttributes)
 							.collect(Collectors.toList());
 					group.setAttributes(attributes);
 				}

@@ -1,16 +1,16 @@
 package org.snomed.languages.scg.validation;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import org.snomed.languages.scg.SCGException;
 import org.snomed.languages.scg.domain.model.Attribute;
 import org.snomed.languages.scg.domain.model.AttributeGroup;
 import org.snomed.languages.scg.domain.model.AttributeValue;
 import org.snomed.languages.scg.domain.model.Expression;
 
-public class SCGValidation {
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+public class SCGValidator {
 
 	/**
 	 * Perform any validations on expressions and throws a {@link SCGException}
@@ -18,18 +18,12 @@ public class SCGValidation {
 	 * @param expression
 	 * @throws SCGException
 	 */
-	@SuppressWarnings("serial")
 	public void validateExpression(final Expression expression) throws SCGException {
-
 		// Concept id validation phase
-		validateConceptIds(expression, new CompositConceptIdValidator(new ArrayList<Validator<String>>() {
-			{
-				add(new VerhoeffCheckDigitValidator());
-			}
-		}));
+		validateConceptIds(expression, new CompositeConceptIdValidator(Collections.singletonList(new VerhoeffCheckDigitValidator())));
 	}
 
-	private void validateConceptIds(final Expression expression, final CompositConceptIdValidator compositeValidate)
+	private void validateConceptIds(final Expression expression, final CompositeConceptIdValidator compositeValidate)
 			throws SCGException {
 		if (expression == null) {
 			return;
@@ -48,19 +42,19 @@ public class SCGValidation {
 		// Validate attribute groups
 		final Set<AttributeGroup> attributeGroups = expression.getAttributeGroups();
 		if (attributeGroups != null) {
-			validateAttibuteGroups(attributeGroups, compositeValidate);
+			validateAttributeGroups(attributeGroups, compositeValidate);
 		}
 	}
 
-	private void validateAttibuteGroups(final Set<AttributeGroup> attributeGroups,
-			final CompositConceptIdValidator compositeValidate) {
-		for (final AttributeGroup attibuteGroup : attributeGroups) {
-			validateAttributes(attibuteGroup.getAttributes(), compositeValidate);
+	private void validateAttributeGroups(final Set<AttributeGroup> attributeGroups,
+			final CompositeConceptIdValidator compositeValidate) {
+		for (final AttributeGroup attributeGroup : attributeGroups) {
+			validateAttributes(attributeGroup.getAttributes(), compositeValidate);
 		}
 	}
 
 	private void validateAttributes(final List<Attribute> attributes,
-			final CompositConceptIdValidator compositeValidate) {
+			final CompositeConceptIdValidator compositeValidate) {
 		for (final Attribute attribute : attributes) {
 			// Attribute id validation
 			compositeValidate.validate(attribute.getAttributeId());
@@ -74,10 +68,11 @@ public class SCGValidation {
 		}
 	}
 
-	private class CompositConceptIdValidator {
-		private List<Validator<String>> validatorList;
+	private static class CompositeConceptIdValidator {
 
-		public CompositConceptIdValidator(final List<Validator<String>> validatorList) {
+		private final List<Validator<String>> validatorList;
+
+		public CompositeConceptIdValidator(final List<Validator<String>> validatorList) {
 			this.validatorList = validatorList;
 		}
 
@@ -87,13 +82,8 @@ public class SCGValidation {
 			}
 		}
 
-		@SuppressWarnings("serial")
 		public void validate(final String id) {
-			validate(new ArrayList<String>() {
-				{
-					add(id);
-				}
-			});
+			validate(Collections.singletonList(id));
 		}
 	}
 
