@@ -40,7 +40,7 @@ public class Expression {
 	}
 
 	public void setAttributeGroups(Set<AttributeGroup> groups) {
-		this.attributeGroups  = groups;
+		this.attributeGroups = groups;
 	}
 
 	public Set<AttributeGroup> getAttributeGroups() {
