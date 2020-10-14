@@ -20,10 +20,16 @@ public class AttributeGroup implements Refinement {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("AttributeGroup [");
-		if (attributes != null)
-			builder.append("attributes=").append(attributes);
-		builder.append("]");
+		builder.append("{ ");
+		if (attributes != null) {
+			for (int i = 0; i < attributes.size(); i++) {
+				if (i > 0) {
+					builder.append(", ");
+				}
+				builder.append(attributes.get(i).toString());
+			}
+		}
+		builder.append(" }");
 		return builder.toString();
 	}
 	

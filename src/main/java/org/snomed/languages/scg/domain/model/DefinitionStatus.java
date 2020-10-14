@@ -17,4 +17,9 @@ public enum DefinitionStatus {
 		}
 		return null;
 	}
+
+	@Override
+	public String toString() {
+		return text;
+	}
 }

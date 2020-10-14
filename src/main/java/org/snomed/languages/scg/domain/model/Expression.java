@@ -1,5 +1,6 @@
 package org.snomed.languages.scg.domain.model;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -51,19 +52,47 @@ public class Expression {
 		this.attributes = attributes;
 	}
 
+	/**
+	 * Writes expression out in normalised SNOMED Compositional Grammar form.
+	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Expression [");
-		if (definitionStatus != null)
-			builder.append("definitionStatus=").append(definitionStatus).append(", ");
-		if (focusConcepts != null)
-			builder.append("focusConcepts=").append(focusConcepts).append(", ");
-		if (attributes != null)
-			builder.append("attributes=").append(attributes).append(", ");
-		if (attributeGroups != null)
-			builder.append("attributeGroups=").append(attributeGroups);
-		builder.append("]");
+		if (definitionStatus != null) {
+			builder.append(definitionStatus.toString()).append(" ");
+		}
+		if (focusConcepts != null) {
+			for (int i = 0; i < focusConcepts.size(); i++) {
+				if (i > 0) {
+					builder.append(" + ");
+				}
+				builder.append(focusConcepts.get(i));
+			}
+		}
+		if (attributes != null || attributeGroups != null) {
+			builder.append(" : ");
+		}
+		if (attributes != null) {
+			for (int i = 0; i < attributes.size(); i++) {
+				if (i > 0) {
+					builder.append(", ");
+				}
+				builder.append(attributes.get(i).toString());
+			}
+			if (attributeGroups != null && !attributeGroups.isEmpty()) {
+				builder.append(" ");
+			}
+		}
+		if (attributeGroups != null) {
+			Iterator<AttributeGroup> iterator = attributeGroups.iterator();
+			while (iterator.hasNext()) {
+				AttributeGroup attributeGroup = iterator.next();
+				builder.append(attributeGroup.toString());
+				if (iterator.hasNext()) {
+					builder.append(" ");
+				}
+			}
+		}
 		return builder.toString();
 	}
 

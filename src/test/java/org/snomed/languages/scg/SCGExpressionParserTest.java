@@ -206,4 +206,16 @@ public class SCGExpressionParserTest {
 		assertEquals(1, attributeGroups.size());
 		assertEquals(2, attributeGroups.iterator().next().getAttributes().size());
 	}
+
+	@Test
+	public void testExpressionToString() {
+		String scg = "397956004 |prosthetic arthroplasty of the hip|:"
+				+ "363704007 |procedure site| = (24136001 |hip joint structure|: "
+				+ "272741003 |laterality| = 7771000 |left|),"
+				+ "{ 363699004 |direct device| = 304120007 |total hip replacement prosthesis|,"
+				+ "260686004 |method| = 257867005 |insertion - action|}";
+
+		Expression expression = builder.parseExpression(scg);
+		assertEquals("=== 397956004 : 363704007 = ( === 24136001 : 272741003 = 7771000 ) { 363699004 = 304120007, 260686004 = 257867005 }", expression.toString());
+	}
 }

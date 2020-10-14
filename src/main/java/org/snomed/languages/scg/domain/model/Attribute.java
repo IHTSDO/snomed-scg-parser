@@ -36,12 +36,12 @@ public class Attribute implements Refinement {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Attribute [");
-		if (attributeId != null)
-			builder.append("attributeId=").append(attributeId).append(", ");
-		if (attributeValue != null)
-			builder.append("attributeValue=").append(attributeValue);
-		builder.append("]");
+		if (attributeId != null) {
+			builder.append(attributeId).append(" = ");
+		}
+		if (attributeValue != null) {
+			builder.append(attributeValue.toString());
+		}
 		return builder.toString();
 	}
 

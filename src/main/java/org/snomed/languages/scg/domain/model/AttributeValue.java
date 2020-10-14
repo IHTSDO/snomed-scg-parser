@@ -63,12 +63,12 @@ public class AttributeValue implements Refinement {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("AttributeValue [");
-		if (conceptId != null)
-			builder.append("conceptId=").append(conceptId).append(", ");
-		if (nestedExpression != null)
-			builder.append("nestedExpression=").append(nestedExpression);
-		builder.append("]");
+		if (conceptId != null) {
+			builder.append(conceptId);
+		}
+		if (nestedExpression != null) {
+			builder.append("( ").append(nestedExpression.toString()).append(" )");
+		}
 		return builder.toString();
 	}
 }
