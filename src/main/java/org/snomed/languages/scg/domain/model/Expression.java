@@ -58,9 +58,10 @@ public class Expression {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		if (definitionStatus != null) {
-			builder.append(definitionStatus.toString()).append(" ");
+		if (getDefinitionStatus() != null) {
+			builder.append(getDefinitionStatus().toString()).append(" ");
 		}
+		List<String> focusConcepts = getFocusConcepts();
 		if (focusConcepts != null) {
 			for (int i = 0; i < focusConcepts.size(); i++) {
 				if (i > 0) {
@@ -69,6 +70,8 @@ public class Expression {
 				builder.append(focusConcepts.get(i));
 			}
 		}
+		List<Attribute> attributes = getAttributes();
+		Set<AttributeGroup> attributeGroups = getAttributeGroups();
 		if (attributes != null || attributeGroups != null) {
 			builder.append(" : ");
 		}
