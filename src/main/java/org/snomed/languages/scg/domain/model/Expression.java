@@ -4,11 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.snomed.languages.scg.domain.model.Attribute;
-import org.snomed.languages.scg.domain.model.AttributeGroup;
-import org.snomed.languages.scg.domain.model.DefinitionStatus;
-import org.snomed.languages.scg.domain.model.Expression;
-
 public class Expression {
 
 	private DefinitionStatus definitionStatus;
@@ -16,8 +11,7 @@ public class Expression {
 	private List<Attribute> attributes;
 	private Set<AttributeGroup> attributeGroups;
 	
-	public Expression () {
-		definitionStatus = DefinitionStatus.EQUIVALENT_TO;
+	public Expression() {
 	}
 
 	public List<Attribute> getAttributes() {

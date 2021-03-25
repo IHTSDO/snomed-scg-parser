@@ -21,6 +21,7 @@ public class AttributeGroup implements Refinement {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("{ ");
+		final List<Attribute> attributes = getAttributes();
 		if (attributes != null) {
 			for (int i = 0; i < attributes.size(); i++) {
 				if (i > 0) {
