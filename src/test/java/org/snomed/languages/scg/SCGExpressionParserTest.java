@@ -28,7 +28,7 @@ public class SCGExpressionParserTest {
 
 	@Test
 	public void testSimpleExpression() {
-		String scg = "83152002 |oophorectomy|";
+		String scg = "=== 83152002 |oophorectomy|";
 		Expression expression = builder.parseExpression(scg);
 		assertNotNull(expression.getDefinitionStatus());
 		assertEquals(expression.getDefinitionStatus(), DefinitionStatus.EQUIVALENT_TO);
@@ -44,7 +44,7 @@ public class SCGExpressionParserTest {
 
 	@Test
 	public void testExpressionWithMultipleFocusConcepts() {
-		String scg = "421720008 |Spray dose form|  +  7946007 |Drug suspension|";
+		String scg = "=== 421720008 |Spray dose form|  +  7946007 |Drug suspension|";
 		Expression expression = builder.parseExpression(scg);
 		assertNotNull(expression.getDefinitionStatus());
 		assertEquals(expression.getDefinitionStatus(), DefinitionStatus.EQUIVALENT_TO);
@@ -80,7 +80,7 @@ public class SCGExpressionParserTest {
 	public void testExpressionWithAttribute() {
 		String scg = "83152002 |oophorectomy|: 405815000|procedure device| = 122456005 |laser device|";
 		Expression expression = builder.parseExpression(scg);
-		assertEquals(DefinitionStatus.EQUIVALENT_TO, expression.getDefinitionStatus());
+        assertNull(expression.getDefinitionStatus());
 		assertNotNull(expression.getFocusConcepts());
 		assertEquals(1, expression.getFocusConcepts().size());
 		assertTrue(expression.getFocusConcepts().contains("83152002"));
@@ -99,7 +99,7 @@ public class SCGExpressionParserTest {
 
 	@Test
 	public void testExpressionWithAttributeGroups() {
-		String example = "71388002 |Procedure| :" + "{  260686004 |Method| = 129304002 |Excision - action| ,"
+		String example = "=== 71388002 |Procedure| :" + "{  260686004 |Method| = 129304002 |Excision - action| ,"
 			+ "   405813007 |Procedure site - direct| = 15497006 |Ovarian structure| },"
 			+ "{  260686004 |Method| = 129304002 |Excision - action| ,"
 			+ "   405813007 |Procedure site - direct| = 31435000 |Fallopian tube structure| }";
@@ -142,7 +142,7 @@ public class SCGExpressionParserTest {
 
 	@Test
 	public void testExpressionWithSimpleNestedRefinements() {
-		String scg = "373873005 |Pharmaceutical / biologic product| :"
+		String scg = "=== 373873005 |Pharmaceutical / biologic product| :"
 			+ "411116001 |Has dose form|  = ( 421720008 |Spray dose form|  +  7946007 |Drug suspension| )";
 		Expression expression = builder.parseExpression(scg);
 		assertEquals(DefinitionStatus.EQUIVALENT_TO, expression.getDefinitionStatus());
@@ -159,7 +159,7 @@ public class SCGExpressionParserTest {
 		assertNull(attribute.getAttributeValue().getConceptId());
 		Expression nestedExpression = attribute.getAttributeValue().getNestedExpression();
 		assertNotNull(nestedExpression);
-		assertEquals(DefinitionStatus.EQUIVALENT_TO, nestedExpression.getDefinitionStatus());
+        assertNull(nestedExpression.getDefinitionStatus());
 		assertTrue(nestedExpression.getFocusConcepts().contains("421720008"));
 		assertTrue(nestedExpression.getFocusConcepts().contains("7946007"));
 	}
@@ -173,7 +173,7 @@ public class SCGExpressionParserTest {
 
 	@Test
 	public void testExpressionWithNestedRefinements() {
-		String scg = "397956004 |prosthetic arthroplasty of the hip|:"
+		String scg = "=== 397956004 |prosthetic arthroplasty of the hip|:"
 			+ "363704007 |procedure site| = (24136001 |hip joint structure|: "
 			+ "272741003 |laterality| = 7771000 |left|),"
 			+ "{ 363699004 |direct device| = 304120007 |total hip replacement prosthesis|,"
@@ -194,7 +194,7 @@ public class SCGExpressionParserTest {
 
 		Expression nestedExpression = attribute.getAttributeValue().getNestedExpression();
 		assertNotNull(nestedExpression);
-		assertEquals(DefinitionStatus.EQUIVALENT_TO, nestedExpression.getDefinitionStatus());
+		assertNull(nestedExpression.getDefinitionStatus());
 		assertTrue(nestedExpression.getFocusConcepts().contains("24136001"));
 		assertEquals(1, nestedExpression.getAttributes().size());
 		Attribute nestedAttribute = nestedExpression.getAttributes().get(0);
@@ -216,6 +216,6 @@ public class SCGExpressionParserTest {
 				+ "260686004 |method| = 257867005 |insertion - action|}";
 
 		Expression expression = builder.parseExpression(scg);
-		assertEquals("=== 397956004 : 363704007 = ( === 24136001 : 272741003 = 7771000 ) { 363699004 = 304120007, 260686004 = 257867005 }", expression.toString());
+		assertEquals("397956004 : 363704007 = ( 24136001 : 272741003 = 7771000 ) { 363699004 = 304120007, 260686004 = 257867005 }", expression.toString());
 	}
 }
