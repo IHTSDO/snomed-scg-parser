@@ -13,5 +13,5 @@ The official SNOMED International ABNF syntax definition for SCG has been conver
   - The object factory can be extended in order to have the expression Java objects instantiated using your own classes.
 
 ## Example
-For code examples see [unit tests](https://github.com/IHTSDO/snomed-scg-parser/blob/develop/src/test/java/org/snomed/languages/scg/SCGQueryBuilderTest.java#L18)
+For code examples see [unit tests](https://github.com/IHTSDO/snomed-scg-parser/blob/master/src/test/java/org/snomed/languages/scg/SCGQueryBuilderTest.java#L18)
 
