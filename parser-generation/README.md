@@ -13,7 +13,7 @@ grammar SCG;
 ```
 
 # Generate the ANTLR Parser
-Download the ANTLR java program from https://github.com/antlr/website-antlr4/blob/gh-pages/download/antlr-4.5.3-complete.jar
+Download the ANTLR java program from https://github.com/antlr/website-antlr4/raw/gh-pages/download/antlr-4.5.3-complete.jar
 
 Use the program to generate the Expression Template parser:
 ```
