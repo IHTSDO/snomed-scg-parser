@@ -15,8 +15,8 @@ public class SCGValidator {
 	/**
 	 * Perform any validations on expressions and throws a {@link SCGException}
 	 *
-	 * @param expression
-	 * @throws SCGException
+	 * @param expression the expression to validate
+	 * @throws SCGException if validation fails
 	 */
 	public void validateExpression(final Expression expression) throws SCGException {
 		// Concept id validation phase

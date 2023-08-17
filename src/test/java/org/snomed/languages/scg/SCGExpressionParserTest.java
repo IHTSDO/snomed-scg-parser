@@ -65,9 +65,10 @@ public class SCGExpressionParserTest {
 
 	@Test
 	public void testExpressionWithExplicitEquivalentToDefinitionStatus() {
-		String scg = "=== 46866001 |Fracture of lower limb| + 428881005 |Injury of tibia| :\n" +
-				"        116676008 |Associated morphology| = 72704001 |Fracture| ,\n" +
-				"        363698007 |Finding site| = 12611008 |Bone structure of tibia|";
+		String scg = """
+                === 46866001 |Fracture of lower limb| + 428881005 |Injury of tibia| :
+                        116676008 |Associated morphology| = 72704001 |Fracture| ,
+                        363698007 |Finding site| = 12611008 |Bone structure of tibia|""";
 		Expression expression = builder.parseExpression(scg);
 		assertEquals(DefinitionStatus.EQUIVALENT_TO, expression.getDefinitionStatus());
 		assertNotNull(expression.getFocusConcepts());
