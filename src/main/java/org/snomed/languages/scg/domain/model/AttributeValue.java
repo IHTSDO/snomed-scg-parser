@@ -1,12 +1,12 @@
 package org.snomed.languages.scg.domain.model;
 
-import org.snomed.languages.scg.domain.model.AttributeValue;
-import org.snomed.languages.scg.domain.model.Expression;
-import org.snomed.languages.scg.domain.model.Refinement;
+import java.util.Objects;
 
 public class AttributeValue implements Refinement {
 	
 	private String conceptId;
+	private String numericValue;
+	private String stringValue;
 	private Expression nestedExpression;
 	
 	public String getConceptId() {
@@ -16,7 +16,23 @@ public class AttributeValue implements Refinement {
 	public void setConceptId(String conceptId) {
 		this.conceptId = conceptId;
 	}
-	
+
+	public String getNumericValue() {
+		return numericValue;
+	}
+
+	public void setNumericValue(String numericValue) {
+		this.numericValue = numericValue;
+	}
+
+	public String getStringValue() {
+		return stringValue;
+	}
+
+	public void setStringValue(String stringValue) {
+		this.stringValue = stringValue;
+	}
+
 	public Expression getNestedExpression() {
 		return nestedExpression;
 	}
@@ -30,34 +46,14 @@ public class AttributeValue implements Refinement {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((conceptId == null) ? 0 : conceptId.hashCode());
-		result = prime * result + ((nestedExpression == null) ? 0 : nestedExpression.hashCode());
-		return result;
+	public boolean equals(Object o) {
+		if (!(o instanceof AttributeValue that)) return false;
+		return Objects.equals(conceptId, that.conceptId) && Objects.equals(numericValue, that.numericValue) && Objects.equals(stringValue, that.stringValue) && Objects.equals(nestedExpression, that.nestedExpression);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		AttributeValue other = (AttributeValue) obj;
-		if (conceptId == null) {
-			if (other.conceptId != null)
-				return false;
-		} else if (!conceptId.equals(other.conceptId))
-			return false;
-		if (nestedExpression == null) {
-			if (other.nestedExpression != null)
-				return false;
-		} else if (!nestedExpression.equals(other.nestedExpression))
-			return false;
-		return true;
+	public int hashCode() {
+		return Objects.hash(conceptId, numericValue, stringValue, nestedExpression);
 	}
 
 	@Override
@@ -65,9 +61,13 @@ public class AttributeValue implements Refinement {
 		StringBuilder builder = new StringBuilder();
 		if (conceptId != null) {
 			builder.append(conceptId);
+		} else if (stringValue != null) {
+			builder.append("\"").append(stringValue).append("\"");
+		} else if (numericValue != null) {
+			builder.append("#").append(numericValue);
 		}
 		if (nestedExpression != null) {
-			builder.append("( ").append(nestedExpression.toString()).append(" )");
+			builder.append("( ").append(nestedExpression).append(" )");
 		}
 		return builder.toString();
 	}

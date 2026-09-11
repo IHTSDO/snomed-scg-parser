@@ -61,7 +61,9 @@ public class SCGValidator {
 			// Attribute value validation
 			final AttributeValue attributeValue = attribute.getAttributeValue();
 			if (attributeValue != null) {
-				compositeValidate.validate(attributeValue.getConceptId());
+				if (attributeValue.getConceptId() != null) {
+					compositeValidate.validate(attributeValue.getConceptId());
+				}
 				// Nested Expression
 				validateConceptIds(attributeValue.getNestedExpression(), compositeValidate);
 			}

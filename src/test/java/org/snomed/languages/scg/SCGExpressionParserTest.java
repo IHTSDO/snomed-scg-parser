@@ -241,4 +241,19 @@ public class SCGExpressionParserTest {
 		Expression expression = builder.parseExpression(scg);
 		assertEquals("397956004 : 363704007 = ( 24136001 : 272741003 = 7771000 ) { 363699004 = 304120007, 260686004 = 257867005 }", expression.toString());
 	}
+
+	@Test
+	public void testConcreteString() {
+		assertEquals("27113001 : 1142139005 = \"SUPPLIER\"", builder.parseExpression("27113001 : 1142139005 = \"SUPPLIER\"").toString());
+	}
+
+	@Test
+	public void testConcreteInteger() {
+		assertEquals("27113001 : 1142139005 = #42", builder.parseExpression("27113001 : 1142139005 = #42").toString());
+	}
+
+	@Test
+	public void testConcreteFloat() {
+		assertEquals("27113001 : 1142139005 = #42.1", builder.parseExpression("27113001 : 1142139005 = #42.1").toString());
+	}
 }

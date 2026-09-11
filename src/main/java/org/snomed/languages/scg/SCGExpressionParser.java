@@ -143,19 +143,25 @@ public class SCGExpressionParser {
 			if (conceptreference != null && conceptreference.conceptid() != null) {
 				attribute.setAttributeId(conceptreference.conceptid().getText());
 			}
-			
-			ExpressionvalueContext expressionvalue = ctx.attributevalue().expressionvalue();
+
+			SCGParser.AttributevalueContext attributevalue = ctx.attributevalue();
+			ExpressionvalueContext expressionvalue = attributevalue.expressionvalue();
+			AttributeValue value = scgObjectFactory.getAttributeValue();
 			if (expressionvalue != null) {
-				AttributeValue value = scgObjectFactory.getAttributeValue();
 				if (expressionvalue.subexpression() != null) {
 					value.setNestedExpression(build(expressionvalue.subexpression()));
 				}
-				
 				if (expressionvalue.conceptreference() != null) {
 					value.setConceptId(expressionvalue.conceptreference().conceptid().getText());
 				}
-				attribute.setAttributeValue(value);
 			}
+			if (attributevalue.stringvalue() != null) {
+				value.setStringValue(attributevalue.stringvalue().getText());
+			}
+			if (attributevalue.numericvalue() != null) {
+				value.setNumericValue(attributevalue.numericvalue().getText());
+			}
+			attribute.setAttributeValue(value);
 			return attribute;
 		}
 
