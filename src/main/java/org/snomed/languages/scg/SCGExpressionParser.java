@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.RecognitionException;
@@ -38,8 +38,7 @@ public class SCGExpressionParser {
 
 	public Expression parseExpression(String scg) throws SCGException {
 		
-		ANTLRInputStream inputStream = new ANTLRInputStream(scg);
-		final SCGLexer lexer = new SCGLexer(inputStream);
+		final SCGLexer lexer = new SCGLexer(CharStreams.fromString(scg));
 		final CommonTokenStream tokenStream = new CommonTokenStream(lexer);
 		final SCGParser parser = new SCGParser(tokenStream);
 		parser.addErrorListener(new SCGParserErrorListener());

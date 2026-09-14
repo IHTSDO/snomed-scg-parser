@@ -1,4 +1,4 @@
-// Generated from SCG.txt by ANTLR 4.5.3
+// Generated from parser-generation/SCG.txt by ANTLR 4.13.2
 package org.snomed.languages.scg.generated.parser;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -10,6 +10,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
+@SuppressWarnings("CheckReturnValue")
 public class SCGBaseListener implements SCGListener {
 	/**
 	 * {@inheritDoc}

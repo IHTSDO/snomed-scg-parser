@@ -13,11 +13,16 @@ grammar SCG;
 ```
 
 # Generate the ANTLR Parser
-Download the ANTLR java program from https://github.com/antlr/website-antlr4/raw/gh-pages/download/antlr-4.5.3-complete.jar
+Download the ANTLR java program from https://www.antlr.org/download/antlr-4.13.2-complete.jar
+
+The ANTLR runtime version must match the version managed by `snomed-parent-bom`
+(currently `antlr4-runtime` 4.13.2).
 
 Use the program to generate the Expression Template parser:
 ```
-java -jar antlr-4.5.3-complete.jar SCG.txt -o parser-files
+java -jar antlr-4.13.2-complete.jar SCG.txt -o parser-files -package org.snomed.languages.scg.generated.parser
 ```
 
 The parser java source files will be generated in a directory named parser-files.
+Copy `SCGLexer.java`, `SCGParser.java`, `SCGListener.java`, and `SCGBaseListener.java`
+into `src/main/java/org/snomed/languages/scg/generated/parser/`.
