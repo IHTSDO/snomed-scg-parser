@@ -15,6 +15,11 @@
 	<name>SNOMED CT Compositional Grammar Parser</name>
 	<description>A parser for SNOMED CT post-coordinated expressions written in SNOMED Compositional Grammar.</description>
 
+	<properties>
+		<!-- ANTLR-generated sources contain inherent duplication; exclude from CPD only -->
+		<sonar.cpd.exclusions>**/org/snomed/languages/scg/generated/parser/**</sonar.cpd.exclusions>
+	</properties>
+
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
