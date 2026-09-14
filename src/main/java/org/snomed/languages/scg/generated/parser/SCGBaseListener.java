@@ -1,4 +1,4 @@
-// Generated from parser-generation/SCG.txt by ANTLR 4.13.2
+// Generated from SCG.txt by ANTLR 4.13.2
 package org.snomed.languages.scg.generated.parser;
 
 import org.antlr.v4.runtime.ParserRuleContext;

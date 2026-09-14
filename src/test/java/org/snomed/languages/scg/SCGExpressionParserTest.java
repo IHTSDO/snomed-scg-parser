@@ -26,6 +26,28 @@ public class SCGExpressionParserTest {
 		builder.parseExpression(scg);
 	}
 
+	@Test(expected = SCGException.class)
+	public void testExpressionWithMissingColonRejectsTrailingTokens() {
+		// Without EOF / leftover-token checks this incorrectly parses as focus concept only
+		String scg = "373873005 |Pharmaceutical / biologic product|" +
+				"\t\t411116001 |Has dose form|  = 421720008 |Spray dose form|";
+		builder.parseExpression(scg);
+	}
+
+	@Test(expected = SCGException.class)
+	public void testExpressionWithMissingEquals() {
+		String scg = "373873005 |Pharmaceutical / biologic product| :" +
+				"\t\t411116001 |Has dose form| 421720008 |Spray dose form|";
+		builder.parseExpression(scg);
+	}
+
+	@Test(expected = SCGException.class)
+	public void testExpressionWithDoubleEquals() {
+		String scg = "373873005 |Pharmaceutical / biologic product| :" +
+				"\t\t411116001 |Has dose form| == 421720008 |Spray dose form|";
+		builder.parseExpression(scg);
+	}
+
 	@Test
 	public void testSimpleExpression() {
 		String scg = "=== 83152002 |oophorectomy|";

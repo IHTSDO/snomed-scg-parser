@@ -1,5 +1,5 @@
 grammar SCG;
-expression :  ws (definitionstatus ws)? subexpression ws;
+expression :  ws (definitionstatus ws)? subexpression ws EOF;
 subexpression : focusconcept (ws COLON ws refinement)?;
 definitionstatus : equivalentto | subtypeof;
 equivalentto : (EQUALS EQUALS EQUALS);

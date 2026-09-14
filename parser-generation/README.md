@@ -12,6 +12,12 @@ Add the following as the first line of the SCG.txt file:
 grammar SCG;
 ```
 
+Ensure the start rule ends with `EOF` so trailing tokens are rejected
+(e.g. a missing colon before refinements must not parse as a focus-only expression):
+```
+expression :  ws (definitionstatus ws)? subexpression ws EOF;
+```
+
 # Generate the ANTLR Parser
 Download the ANTLR java program from https://www.antlr.org/download/antlr-4.13.2-complete.jar
 
